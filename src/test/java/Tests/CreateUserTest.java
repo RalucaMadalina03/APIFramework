@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 public class CreateUserTest {
 
-    public String userId;
+
     public String userID;
     public String username;
     public String password;
@@ -70,7 +70,7 @@ public class CreateUserTest {
         Assert.assertEquals(responseAccountSuccess.getUsername(),username);
         Assert.assertNotNull(responseAccountSuccess.getBooks());
 
-        userId = responseAccountSuccess.getUserID();
+        userID = responseAccountSuccess.getUserID();
 
     }
 
