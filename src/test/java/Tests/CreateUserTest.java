@@ -22,8 +22,10 @@ public class CreateUserTest {
     public String token;
 
     @Test
-    public void MetodaTest(){
-        System.out.println("Step one : Create user");
+    public void MetodaTest(){ //facem intregul flow in acest test pentru a pastra logica de creare user, autentificare, token
+        //Adica facem aici toate REQUESTURILE DE BACKEND
+
+        System.out.println("Step 1 : Create user");
         createUser();
         System.out.println("Step 2 : Generate Token ");
         generateToken();
@@ -40,7 +42,7 @@ public class CreateUserTest {
 
         // Configuram request- ul
 
-         username = "Mada" + System.currentTimeMillis();
+         username = "Mada" + System.currentTimeMillis(); // va genera valoare unica
          password = "Madalina01!";
 
 //        JSONObject requestbody = new JSONObject();
@@ -48,12 +50,12 @@ public class CreateUserTest {
 //        requestbody.put("password" , "Madalina01!");
 
         RequestAcount requestAcount = new RequestAcount(username,password);
-        requestSpecification.body(requestAcount);
+        requestSpecification.body(requestAcount); // atasam body-ul pe constructia clientului(cea de sus)
 
 
         // Accesam response-ul
 
-        Response response = requestSpecification.post("/Account/v1/User");
+        Response response = requestSpecification.post("/Account/v1/User"); // accesam raspunsul trimitand un request de tip Post
         ResponseBody body = response.getBody();
         body.prettyPrint();
 
@@ -66,18 +68,18 @@ public class CreateUserTest {
 
         ResponseAccountSuccess responseAccountSuccess = response.body().as(ResponseAccountSuccess.class);
 
-        Assert.assertNotNull(responseAccountSuccess.getUserID()); // verificam ca exista o valoare pt field
+        Assert.assertNotNull(responseAccountSuccess.getUserId()); // verificam ca exista o valoare pt field
         Assert.assertEquals(responseAccountSuccess.getUsername(),username);
         Assert.assertNotNull(responseAccountSuccess.getBooks());
 
-        userID = responseAccountSuccess.getUserID();
+        userID = responseAccountSuccess.getUserId();  //am salvat userID-ul pentru a-l folosi la urmatorul pas
 
     }
 
     // Facem un request care ne genereaza un Token
 
 
-    public  void generateToken() {
+    public  void generateToken() { //PASUL 2 - FACEM POSTUL CARE NE DA UN TOKEN
 
         RequestSpecification requestSpecification = RestAssured.given();
         requestSpecification.baseUri("https://demoqa.com");
@@ -92,36 +94,34 @@ public class CreateUserTest {
         ResponseBody body = response.getBody();
         body.prettyPrint();
 
-        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.getStatusCode(),200);  //validarea de status code
         ResponseTokenSuccess responseTokenSuccess = response.body().as(ResponseTokenSuccess.class);
 
         Assert.assertNotNull(responseTokenSuccess.getToken()); // verificam ca exista o valoare pt field
-        Assert.assertNotNull(responseTokenSuccess.getExpires());
+        Assert.assertNotNull(responseTokenSuccess.getExpires()); // verificam ca exista o valoare, ca nu e nul
         Assert.assertEquals(responseTokenSuccess.getStatus(),"Success");
         Assert.assertEquals(responseTokenSuccess.getResult(),"User authorized successfully. ");
 
-        token = responseTokenSuccess.getToken();
+        token = responseTokenSuccess.getToken(); // am extras/salvat tokenul pt a-l folosi pentru uurmatorul pas
 
     }
 // Facem un get pentru userul creat
 
-    public void interractNewUser(){
+    public void interractNewUser(){   //PASUL 3 FACEM AUTORIZAREA
 
         RequestSpecification requestSpecification = RestAssured.given();
         requestSpecification.baseUri("https://demoqa.com");
         requestSpecification.contentType("application/json");
-        requestSpecification.header("Authorization","Bearer" + token);
+        requestSpecification.header("Authorization","Bearer" + token);  //autorizare care foloseste token
 
         Response response = requestSpecification.get("/Account/v1/User/"+ userID ); // compunere de endpoint din url-uri
 
         Assert.assertEquals(response.getStatusCode(),200);
+
         ResponseAccountSuccess responseAccountSuccess = response.body().as(ResponseAccountSuccess.class);
-
-        Assert.assertNotNull(responseAccountSuccess.getUserId()); // verificam ca exista o valoare pt field
-        Assert.assertEquals(responseAccountSuccess.getUsername(),username);
-        Assert.assertNotNull(responseAccountSuccess.getBooks());
-
-
+        Assert.assertNotNull(responseAccountSuccess.getUserId()); //verificam ca exista o valoare pt id, cat nu e nul
+        Assert.assertEquals(responseAccountSuccess.getUsername(),username); //verif ca username are valoarea din request
+        Assert.assertNotNull(responseAccountSuccess.getBooks()); //verificam ca books sa contina cel putin "["
 
     }
     }

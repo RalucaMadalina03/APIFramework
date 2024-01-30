@@ -6,8 +6,10 @@ import java.util.List;
 
 public class ResponseAccountSuccess {
 
-    @JsonProperty("userID")
-    private String userID;
+    //invatam despre adnotari JsonProperty numit si alias, porecla
+
+    @JsonProperty("userId")  //definim fiecare camp din consolta pentru a stii cum sa il citeasca
+    private String userId;
 
     @JsonProperty("username")
     private String username;
@@ -15,8 +17,8 @@ public class ResponseAccountSuccess {
     @JsonProperty("books")
     private List<BookObject> books;
 
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
 
     public String getUsername() {
@@ -26,5 +28,6 @@ public class ResponseAccountSuccess {
     public List<BookObject> getBooks() {
         return books;
     }
+
 
 }
