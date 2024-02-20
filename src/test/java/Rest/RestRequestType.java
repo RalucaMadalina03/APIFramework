@@ -1,10 +1,13 @@
 package Rest;
 
 public class RestRequestType {
+    //Tipul reqestului
+    public static final String REQUEST_POST = "post";
+    public static final String REQUEST_PUT = "put";
+    public static final String REQUEST_GET = "get";
+    public static final String REQUEST_DELETE = "delete";
 
-    public static final String RequestPost = "post";
-    public static final String Requestput = "put";
-    public static final String Requestget = "get";
-    public static final String RequestDelete = "delete";
+    //constante care nu se modifica - primul nivel
+
 
 }

@@ -1,16 +1,16 @@
-package ResponseObject;
+package Objects.ResponseObject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookObject {
     @JsonProperty("isbn")
-    public String isbn;
+    public String isbn;                              //sa vedem daca trebuie modificata in private sau nu
 
     @JsonProperty("title")
     public String title;
 
-    @JsonProperty("subtitle")
-    public String subtitle;
+    @JsonProperty("subTitle")
+    public String subTitle;
 
     @JsonProperty("author")
     public String author;
@@ -30,7 +30,7 @@ public class BookObject {
     @JsonProperty("website")
     public String website;
 
-    public String getIsbn() {
+    public String getIsbn() {                    // facem doar getteri . Pe response-uri nu ar trebui cam niciodata sa facem setteri(ca in teorie response-ul este ce ne da serverul)
         return isbn;
     }
 
@@ -38,8 +38,8 @@ public class BookObject {
         return title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getSubTitle() {
+        return subTitle;
     }
 
     public String getAuthor() {

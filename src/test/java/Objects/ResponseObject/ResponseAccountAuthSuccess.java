@@ -1,21 +1,19 @@
-package ResponseObject;
+package Objects.ResponseObject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ResponseAccountSuccess {
+public class ResponseAccountAuthSuccess {
 
-    //invatam despre adnotari JsonProperty numit si alias, porecla
-
-    @JsonProperty("userId")  //definim fiecare camp din consolta pentru a stii cum sa il citeasca
+    @JsonProperty("userId")
     private String userId;
-
+    //maparea unei prime variabile pe care respone-ul o oare
     @JsonProperty("username")
     private String username;
 
     @JsonProperty("books")
-    private List<BookObject> books;
+    private List<BookObject> books; // am construit un obiect care sa contina toate informatiile partii books
 
     public String getUserId() {
         return userId;
@@ -28,6 +26,4 @@ public class ResponseAccountSuccess {
     public List<BookObject> getBooks() {
         return books;
     }
-
-
 }

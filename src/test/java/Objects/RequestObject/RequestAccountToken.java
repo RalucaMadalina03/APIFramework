@@ -1,11 +1,13 @@
-package RequestObject;
+package Objects.RequestObject;
 
-public class RequestAcountToken {
-
+public class RequestAccountToken  {
+    //facem reprezentarea asa cum arata in requestul de pe swagger
+    //2 variabile numite asa cum sunt in request
     private String userName;
+
     private String password;
 
-    public RequestAcountToken(String userName, String password) {
+    public RequestAccountToken(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
